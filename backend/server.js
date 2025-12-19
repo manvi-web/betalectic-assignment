@@ -1,61 +1,46 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
-const bodyParser = require("body-parser");
-const cors = require("cors");
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
-// Test route (optional, but good)
-app.get("/", (req, res) => {
-  res.send("Backend is running");
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-// Contact form API
+
+app.get("/", (req, res) => res.send("Backend is running"));
+
 app.post("/contact", async (req, res) => {
   const { name, email, message } = req.body;
-
   console.log("Name:", name);
   console.log("Email:", email);
   console.log("Message:", message);
 
   try {
-    // Mail configuration
+ 
+    const user = process.env.EMAIL_USER || "manvirao38@gmail.com";
+    const pass = process.env.EMAIL_PASS || "yasd tzmc tiaj exnr";
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
-      auth: {
-        user: "manvirao38@gmail.com",       
-        pass: "yasd tzmc tiaj exnr"           
-      }
+      auth: { user, pass },
     });
 
-    // Mail content
-    const mailOptions = {
-      from: email,
-      to: "manvirao38@gmail.com",           
+    await transporter.sendMail({
+      from: user,        
+      replyTo: email,      
+      to: user,           
       subject: "New Contact Form Submission",
-      text: `
-Name: ${name}
-Email: ${email}
-Message: ${message}
-      `
-    };
+      text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
+    });
 
-    // Send mail
-    await transporter.sendMail(mailOptions);
-
-    res.status(200).send("Email sent successfully");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error sending email");
+    res.send("Email sent successfully");
+  } catch (err) {
+    console.error("EMAIL ERROR:", err); 
+    res.status(500).send("Email failed");
   }
 });
 
-// Start server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
-});
+
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log("Server running on port", PORT));
