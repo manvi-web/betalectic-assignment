@@ -34,7 +34,7 @@ Mailtrap SMTP sandbox is used as a testing inbox to safely verify email delivery
 ## Screenshots
 
 ### Contact Form Submission
-![Contact Form Success](screenshots/contact-form-success.png)
+![Contact Form Success](screenshots/contact-form-sucess.png)
 
 ### Backend Logs (Render)
 ![Render Logs](screenshots/render-logs.png)
