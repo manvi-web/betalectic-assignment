@@ -31,3 +31,14 @@ Mailtrap SMTP sandbox is used as a testing inbox to safely verify email delivery
 2. Navigate to the Contact Us page.
 3. Fill and submit the contact form.
 4. Email will be visible in the Mailtrap Sandbox inbox.
+## Screenshots
+
+### Contact Form Submission
+![Contact Form Success](screenshots/contact-form-success.png)
+
+### Backend Logs (Render)
+![Render Logs](screenshots/render-logs.png)
+
+### Email Verification (Mailtrap)
+![Mailtrap Inbox](screenshots/mailtrap-inbox.png)
+
